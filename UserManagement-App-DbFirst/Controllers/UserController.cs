@@ -35,7 +35,7 @@ namespace UserManagement_App_DbFirst.Controllers
                 _userManager = value;
             }
         }
-        // GET: User List
+        // GET: Display User List
         public ActionResult Index(int? page)
         {
 
