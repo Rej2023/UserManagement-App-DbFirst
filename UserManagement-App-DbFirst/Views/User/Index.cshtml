@@ -1,0 +1,117 @@
+﻿@model UserManagement_App_DbFirst.Models.UserViewModel
+@{
+    ViewBag.Title = "Home Page";
+}
+<style>
+    .pagination > li > a, .pagination > li > span {
+        position: relative;
+        float: left;
+        padding: 6px 12px;
+        margin-left: -1px;
+        line-height: 1.42857143;
+        color: #337ab7;
+        text-decoration: none;
+        background-color: #fff;
+        border: 1px solid #ddd;
+    }
+
+    .pagination > .active > a, .pagination > .active > a:focus, .pagination > .active > a:hover, .pagination > .active > span, .pagination > .active > span:focus, .pagination > .active > span:hover {
+        z-index: 2;
+        color: #fff;
+        cursor: default;
+        background-color: #337ab7;
+        border-color: #337ab7;
+    }
+</style>
+<div class="">
+    <div id="Form-container">
+
+        @{
+            if (ViewBag.Method == "Edit")
+            {
+                @Html.Partial("_EditView")
+            }
+            else if (ViewBag.Method == "Register")
+            {
+                @Html.Partial("_InsertView")
+            }
+        }
+
+    </div>
+    @if (Model.Users.Count() > 0)
+    {
+        <div class="">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Role</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Contact</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="Table_data">
+                    @{
+                        foreach (var row in Model.Users)
+                        {
+
+                            string btnText = row.Active == true ? "Deactivate" : "Activate";
+                            int type = row.Active == true ? 0 : 1;
+
+                            <tr>
+                                <td>@row.UserID</td>
+                                <td>@row.Role</td>
+                                <td>@row.FirstName</td>
+                                <td>@row.LastName</td>
+                                <td>@row.Email</td>
+                                <td>@row.Contact</td>
+                                <td>
+                                    <a class="btn btn-primary" href="@Url.Action("EditUser", "User", new { ID = row.UserID,page=Model.pager.CurrentPage })">Edit</a>
+                                    <a class="btn btn-primary" href="@Url.Action("UpdateUserStatus", "User", new { id = row.UserID, type = type,page=Model.pager.CurrentPage })">@btnText</a>
+                                    <a class="btn btn-danger" href="@Url.Action("DeleteUser", "User", new { ID = row.UserID,page=Model.pager.CurrentPage})">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+            <!-- Paging -->
+            @if (Model.pager.EndPage > 1)
+            {
+                <ul class="pagination">
+                    <!--If Current page is not the First Page, we will show Button/Link to go First or on Previous page-->
+                    @if (Model.pager.CurrentPage > 1)
+                    {
+                        <li>
+                            <a href="~/User/Index">First</a>
+                        </li>
+                        <li>
+                            <a href="~/User/Index?page=@(Model.pager.CurrentPage - 1)">Previous</a>
+                        </li>
+                    }
+                    <!--Paging from StartPage to the end Page-->
+                    @for (var page = Model.pager.StartPage; page <= Model.pager.EndPage; page++)
+                    {
+                        <li class="@(page == Model.pager.CurrentPage ? "active" : "")">
+                            <a href="~/User/Index?page=@page">@page</a>
+                        </li>
+                    }
+                    <!--If Current Page is not the Last Page then show Next and Last Button/link on Paging-->
+                    @if (Model.pager.CurrentPage < Model.pager.TotalPages)
+                    {
+                        <li>
+                            <a href="~/User/Index?page=@(Model.pager.CurrentPage + 1)">Next</a>
+                        </li>
+                        <li>
+                            <a href="~/User/Index?page=@(Model.pager.TotalPages)">Last</a>
+                        </li>
+                    }
+                </ul>
+            }
+        </div>
+    }
+
+</div>

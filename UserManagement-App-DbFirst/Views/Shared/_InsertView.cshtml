@@ -1,0 +1,54 @@
+﻿@model UserManagement_App_DbFirst.Models.UserViewModel
+@{
+    ViewBag.Title = "Register User";
+}
+
+<h2>Register User</h2>
+
+@using (Html.BeginForm("Index", "User", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <fieldset>
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(m => m.User_Data.UserID, new { @class = "form-control", })
+        @Html.HiddenFor(m => m.Page, new { @class = "form-control", })
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.User_Data.FirstName, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(m => m.User_Data.FirstName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User_Data.FirstName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.User_Data.LastName, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(m => m.User_Data.LastName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User_Data.LastName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.User_Data.Email, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(m => m.User_Data.Email, new { @class = "form-control" })
+                @Html.ValidationMessageFor(m => m.User_Data.Email, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(m => m.User_Data.Contact, new { @class = "col-lg-2 control-label" })
+            <div class="col-lg-10">
+                @Html.TextBoxFor(m => m.User_Data.Contact, new { @class = "form-control", type = "number", oninput = "validity.valid||(value='');", @required = "required" })
+                @Html.ValidationMessageFor(m => m.User_Data.Contact, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-lg-10 col-lg-offset-2">
+                <button type="submit" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+
+    </fieldset>
+} 
