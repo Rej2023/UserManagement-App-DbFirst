@@ -21,6 +21,7 @@ namespace UserManagement_App_DbFirst.Controllers
     public class UserController : Controller
     {
         UserServices services = new UserServices();
+        // register user
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
