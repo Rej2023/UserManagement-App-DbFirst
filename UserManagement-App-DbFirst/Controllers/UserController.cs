@@ -58,11 +58,11 @@ namespace UserManagement_App_DbFirst.Controllers
 
         
 
-        [HttpPost]
+        [HttpPost] // post method
         public async Task<ActionResult> Index(UserViewModel _user)
         {
 
-            bool status = CreateValidateModel(_user)
+            bool status = CreateValidateModel(_user);
             if (!status)
             {
                 _user.Users = services.GetUsers(_user.Page, 10);
