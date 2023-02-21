@@ -58,7 +58,7 @@ namespace UserManagement_App_DbFirst.Controllers
 
         
 
-        [HttpPost]
+        [HttpPost] // post method
         public async Task<ActionResult> Index(UserViewModel _user)
         {
 
